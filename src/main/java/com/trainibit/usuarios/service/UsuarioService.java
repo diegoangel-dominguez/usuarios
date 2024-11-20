@@ -13,6 +13,9 @@ public interface UsuarioService {
     List<Usuario> findAll();
 
     //Un solo usuario
+    Usuario findById(Long id);
+
+    //save user
 
     Usuario save(Usuario usuario);
 

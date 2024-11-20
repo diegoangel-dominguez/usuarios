@@ -26,6 +26,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     //Metodo FIndById
 
     @Override
+    public Usuario findById(Long id) {
+        return usuarioRepository.findById(id).get();
+    }
+
+    //Metodo guardar usuario
+
+    @Override
     public Usuario save(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
