@@ -42,13 +42,12 @@ public class Usuario {
     private String password;
 
     @Column(name = "birth_day", nullable = false)
-
     private LocalDate birth_day;
 
 
     //DEFINICION DE GETTERS AND SETTERS PARA REALIZAR LA OPERACION POST
 
-    /*public Long getId() {
+    /* public Long getId() {
         return id;
     }
 

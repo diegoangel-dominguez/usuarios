@@ -49,7 +49,24 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
     }
 
+    //Endpoint PutMapping
+    @PutMapping("/{id}")
 
+    // Recibe el ID como pathvariable y el objeto actualizado en el cuerpo de la solicitud (@RequestBody).
+    public ResponseEntity<Usuario> updateUser(
+            @PathVariable Long id,
+            @RequestBody Usuario userUpdate) {
+        Usuario usuario = usuarioService.update(id, userUpdate);
+        return ResponseEntity.ok(usuario);
+    }
+
+    @DeleteMapping("/{id}")
+    // Este recibe el ID del usuario como parámetro de la ruta (@PathVariable).
+    public ResponseEntity<Usuario> deleteUser(@PathVariable Long id){
+    Usuario deleteUser = usuarioService.delete(id);
+    //Codigo de estatus HTTP 204
+    return ResponseEntity.ok(deleteUser);
+    }
     //@PostMapping
 
     //@DeleteMapping

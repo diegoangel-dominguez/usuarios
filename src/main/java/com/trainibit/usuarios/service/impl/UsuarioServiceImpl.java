@@ -36,4 +36,26 @@ public class UsuarioServiceImpl implements UsuarioService {
     public Usuario save(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }
+
+    // Buscar el usuario por id y guardar los cambios
+    @Override
+    public Usuario update(Long id, Usuario updatedUsuario) {
+        return usuarioRepository.findById(id).map(usuario -> {
+            usuario.setName(updatedUsuario.getName());
+            usuario.setLastName(updatedUsuario.getLastName());
+            usuario.setEmail(updatedUsuario.getEmail());
+            usuario.setPassword(updatedUsuario.getPassword());
+            usuario.setBirth_day(updatedUsuario.getBirth_day());
+            return usuarioRepository.save(usuario);
+        }).orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+    }
+
+    //Emplea el metodo deleteById para eliminar registros por su ID
+    @Override
+    public Usuario delete(Long id) {
+        return usuarioRepository.findById(id).map(usuario -> {
+            usuarioRepository.delete(usuario);
+            return usuario; // Devuelve el usuario eliminado
+        }).orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+    }
 }
