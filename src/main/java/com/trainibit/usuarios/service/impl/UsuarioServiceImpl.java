@@ -4,6 +4,7 @@ import com.trainibit.usuarios.entity.Usuario;
 import com.trainibit.usuarios.repository.UsuarioRepository;
 import com.trainibit.usuarios.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,7 +48,9 @@ public class UsuarioServiceImpl implements UsuarioService {
             usuario.setPassword(updatedUsuario.getPassword());
             usuario.setBirth_day(updatedUsuario.getBirth_day());
             return usuarioRepository.save(usuario);
-        }).orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+        }).orElseThrow(() -> new DataAccessException("Error al actualizar usuario con ID: " + id) {
+
+        });
     }
 
     //Emplea el metodo deleteById para eliminar registros por su ID
