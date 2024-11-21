@@ -1,7 +1,9 @@
 package com.trainibit.usuarios.service.impl;
 
 import com.trainibit.usuarios.entity.Usuario;
+import com.trainibit.usuarios.mapper.UsuarioMapper;
 import com.trainibit.usuarios.repository.UsuarioRepository;
+import com.trainibit.usuarios.response.UsuarioResponse;
 import com.trainibit.usuarios.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -20,8 +22,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     @Override
-    public List<Usuario> findAll() {
-        return usuarioRepository.findAll();
+    public List<UsuarioResponse> findAll() {
+        return UsuarioMapper.mapListEntityToListDto(usuarioRepository.findAll());
     }
 
     //Metodo FIndById
@@ -59,6 +61,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.findById(id).map(usuario -> {
             usuarioRepository.delete(usuario);
             return usuario; // Devuelve el usuario eliminado
-        }).orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+        }).orElseThrow(() -> new DataAccessException("Usuario no encontrado con ID: " + id){
+
+        });
     }
 }

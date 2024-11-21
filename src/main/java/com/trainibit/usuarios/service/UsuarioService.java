@@ -1,6 +1,7 @@
 package com.trainibit.usuarios.service;
 
 import com.trainibit.usuarios.entity.Usuario;
+import com.trainibit.usuarios.response.UsuarioResponse;
 
 import java.util.List;
 
@@ -10,7 +11,7 @@ public interface UsuarioService {
 
 
     //Lista de Usuarios
-    List<Usuario> findAll();
+    List<UsuarioResponse> findAll();
 
     //Un solo usuario
     Usuario findById(Long id);
