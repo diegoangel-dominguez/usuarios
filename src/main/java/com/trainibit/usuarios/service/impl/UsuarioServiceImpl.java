@@ -29,20 +29,28 @@ public class UsuarioServiceImpl implements UsuarioService {
     //Metodo FIndById
 
     @Override
-    public Usuario findById(Long id) {
+    /*public Usuario findById(Long id) {
         return usuarioRepository.findById(id).get();
+    }*/
+
+    public UsuarioResponse findById(Long id) {
+        return UsuarioMapper.mapEntityToDto(usuarioRepository.findById(id).get());
     }
 
     //Metodo guardar usuario
 
     @Override
-    public Usuario save(Usuario usuario) {
+    /*public Usuario save(Usuario usuario) {
         return usuarioRepository.save(usuario);
+    }*/
+    public UsuarioResponse save(Usuario usuario) {
+        return UsuarioMapper.mapEntityToDto(usuarioRepository.save(usuario));
     }
+
 
     // Buscar el usuario por id y guardar los cambios
     @Override
-    public Usuario update(Long id, Usuario updatedUsuario) {
+    /*public Usuario update(Long id, Usuario updatedUsuario) {
         return usuarioRepository.findById(id).map(usuario -> {
             usuario.setName(updatedUsuario.getName());
             usuario.setLastName(updatedUsuario.getLastName());
@@ -53,16 +61,37 @@ public class UsuarioServiceImpl implements UsuarioService {
         }).orElseThrow(() -> new DataAccessException("Error al actualizar usuario con ID: " + id) {
 
         });
+    }*/
+    public UsuarioResponse update(Long id, Usuario updatedUsuario) {
+        return usuarioRepository.findById(id).map(usuario -> {
+            usuario.setName(updatedUsuario.getName());
+            usuario.setLastName(updatedUsuario.getLastName());
+            usuario.setEmail(updatedUsuario.getEmail());
+            usuario.setPassword(updatedUsuario.getPassword());
+            usuario.setBirth_day(updatedUsuario.getBirth_day());
+            return UsuarioMapper.mapEntityToDto(usuarioRepository.save(usuario));
+        }).orElseThrow(() -> new DataAccessException("Error al actualizar usuario con ID: " + id) {
+
+        });
     }
 
     //Emplea el metodo deleteById para eliminar registros por su ID
     @Override
-    public Usuario delete(Long id) {
+    /*public Usuario delete(Long id) {
         return usuarioRepository.findById(id).map(usuario -> {
             usuarioRepository.delete(usuario);
             return usuario; // Devuelve el usuario eliminado
         }).orElseThrow(() -> new DataAccessException("Usuario no encontrado con ID: " + id){
 
         });
+    }*/
+
+    public UsuarioResponse delete(Long id) {
+        return UsuarioMapper.mapEntityToDto(usuarioRepository.findById(id).map(usuario -> {
+            usuarioRepository.delete(usuario);
+            return usuario; // Devuelve el usuario eliminado
+        }).orElseThrow(() -> new DataAccessException("Error al eliminar usuario con ID: " + id){
+
+        }));
     }
 }

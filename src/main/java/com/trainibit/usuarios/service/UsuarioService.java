@@ -14,15 +14,20 @@ public interface UsuarioService {
     List<UsuarioResponse> findAll();
 
     //Un solo usuario
-    Usuario findById(Long id);
+    UsuarioResponse findById(Long id);
 
     //save user
-    Usuario save(Usuario usuario);
+    //Usuario save(Usuario usuario);
+    UsuarioResponse save(Usuario usuario);
 
     //metodo update que realice la lógica para actualizar un usuario en la base de datos.
-    Usuario update(Long id, Usuario deletedUser);
+    //Usuario update(Long id, Usuario deletedUser);
+
+    UsuarioResponse update(Long id, Usuario deletedUser);
 
     //metodo para manejar la logica de eliminacion. Si el usuario no existe, lanza una excepcion personalizada (como en el caso de la operacion PUT).
-    Usuario delete(Long id);
+    //Usuario delete(Long id);
+
+    UsuarioResponse delete(Long id);
 
 }

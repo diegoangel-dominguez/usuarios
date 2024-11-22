@@ -1,6 +1,8 @@
 package com.trainibit.usuarios.controller;
 
 import com.trainibit.usuarios.entity.Usuario;
+import com.trainibit.usuarios.mapper.UsuarioMapper;
+import com.trainibit.usuarios.request.UsuarioRequest;
 import com.trainibit.usuarios.response.UsuarioResponse;
 import com.trainibit.usuarios.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -44,38 +46,69 @@ public class UsuarioController {
     }
 
     //GetlMapping {id}
-    @GetMapping("/{id}")
+
+
+    /*@GetMapping("/{id}")
     public ResponseEntity<Usuario> getUsuarioById(@PathVariable Long id){
         Usuario usuario = usuarioService.findById(id);
         return ResponseEntity.ok(usuario);
-    }
+    }*/
     //Metodo para consultar por id FindById
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioResponse> getUsuarioById(@Valid @PathVariable Long id){
+        UsuarioResponse searchedUser = usuarioService.findById(id);
+        return ResponseEntity.ok(searchedUser);
+    }
 
     @PostMapping
-    public ResponseEntity<Usuario> createUsuario(@Valid @RequestBody Usuario usuario) {
+    /*public ResponseEntity<Usuario> createUsuario(@Valid @RequestBody Usuario usuario) {
         Usuario nuevoUsuario = usuarioService.save(usuario);
         //Codigo de estatus HTTP 201
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
+    }*/
+    public ResponseEntity<UsuarioResponse> createUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest) {
+            Usuario usuario= UsuarioMapper.mapDtoToEntity(usuarioRequest);
+
+            UsuarioResponse createdUser = usuarioService.save(usuario);
+            //Codigo de estatus HTTP 201
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+
     }
 
     //Endpoint PutMapping
     @PutMapping("/{id}")
 
     // Recibe el ID como pathvariable y el objeto actualizado en el cuerpo de la solicitud (@RequestBody).
-    public ResponseEntity<Usuario> updateUser(
+    /*public ResponseEntity<Usuario> updateUser(
             @PathVariable Long id,
             @RequestBody Usuario userUpdate) {
         Usuario usuario = usuarioService.update(id, userUpdate);
         return ResponseEntity.ok(usuario);
+    }*/
+
+    public ResponseEntity<UsuarioResponse> updateUser(
+            @PathVariable Long id,
+            @Valid @RequestBody UsuarioRequest usuarioRequest) {
+        Usuario usuario = UsuarioMapper.mapDtoToEntity(usuarioRequest);
+
+        UsuarioResponse editedUser = usuarioService.update(id, usuario);
+        return ResponseEntity.ok(editedUser);
     }
 
     @DeleteMapping("/{id}")
     // Este recibe el ID del usuario como parámetro de la ruta (@PathVariable).
-    public ResponseEntity<Usuario> deleteUser(@PathVariable Long id){
+    /*public ResponseEntity<Usuario> deleteUser(@PathVariable Long id){
     Usuario deleteUser = usuarioService.delete(id);
     //Codigo de estatus HTTP 204
     return ResponseEntity.ok(deleteUser);
+    }*/
+
+    public ResponseEntity<UsuarioResponse> deleteUser(@Valid @PathVariable Long id){
+        UsuarioResponse deleteUser = usuarioService.delete(id);
+        //Codigo de estatus HTTP 204
+        return ResponseEntity.ok(deleteUser);
     }
+
     //@PostMapping
 
     //@DeleteMapping
