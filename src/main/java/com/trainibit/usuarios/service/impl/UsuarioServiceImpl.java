@@ -71,7 +71,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             usuario.setEmail(updatedUsuario.getEmail());
             usuario.setPassword(updatedUsuario.getPassword());
             usuario.setBirth_day(updatedUsuario.getBirth_day());
-            return UsuarioMapper.mapEntityToDto(usuarioRepository.save(usuario));
+            return UsuarioMapper.mapEntityToDto(usuarioRepository.updateAudit(usuario));
         }).orElseThrow(() -> new DataAccessException("Error al actualizar usuario con ID: " + id) {
 
         });
@@ -90,7 +90,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     public UsuarioResponse delete(Long id) {
         return UsuarioMapper.mapEntityToDto(usuarioRepository.findById(id).map(usuario -> {
-            usuarioRepository.delete(usuario);
+            usuarioRepository.deleteByIdActive(id);
             return usuario; // Devuelve el usuario eliminado
         }).orElseThrow(() -> new DataAccessException("Error al eliminar usuario con ID: " + id){
 
