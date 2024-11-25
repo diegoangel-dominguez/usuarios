@@ -3,6 +3,7 @@ package com.trainibit.usuarios.service.impl;
 import com.trainibit.usuarios.entity.Usuario;
 import com.trainibit.usuarios.mapper.UsuarioMapper;
 import com.trainibit.usuarios.repository.UsuarioRepository;
+import com.trainibit.usuarios.request.UsuarioRequest;
 import com.trainibit.usuarios.response.UsuarioResponse;
 import com.trainibit.usuarios.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,8 @@ public class UsuarioServiceImpl implements UsuarioService {
     /*public Usuario save(Usuario usuario) {
         return usuarioRepository.save(usuario);
     }*/
-    public UsuarioResponse save(Usuario usuario) {
-        return UsuarioMapper.mapEntityToDto(usuarioRepository.save(usuario));
+    public UsuarioResponse save(UsuarioRequest usuarioRequest) {
+        return UsuarioMapper.mapEntityToDto(usuarioRepository.save(UsuarioMapper.mapDtoToEntity(usuarioRequest)));
     }
 
 
@@ -62,7 +63,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         });
     }*/
-    public UsuarioResponse update(Long id, Usuario updatedUsuario) {
+    public UsuarioResponse update(Long id, UsuarioRequest updatedUsuario) {
+
         return usuarioRepository.findById(id).map(usuario -> {
             usuario.setName(updatedUsuario.getName());
             usuario.setLastName(updatedUsuario.getLastName());

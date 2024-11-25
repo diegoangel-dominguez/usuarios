@@ -67,9 +67,9 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body(nuevoUsuario);
     }*/
     public ResponseEntity<UsuarioResponse> createUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest) {
-            Usuario usuario= UsuarioMapper.mapDtoToEntity(usuarioRequest);
+            //Usuario usuario= UsuarioMapper.mapDtoToEntity(usuarioRequest);
 
-            UsuarioResponse createdUser = usuarioService.save(usuario);
+            UsuarioResponse createdUser = usuarioService.save(usuarioRequest);
             //Codigo de estatus HTTP 201
         return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
 
@@ -89,9 +89,9 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponse> updateUser(
             @PathVariable Long id,
             @Valid @RequestBody UsuarioRequest usuarioRequest) {
-        Usuario usuario = UsuarioMapper.mapDtoToEntity(usuarioRequest);
+        //Usuario usuario = UsuarioMapper.mapDtoToEntity(usuarioRequest);
 
-        UsuarioResponse editedUser = usuarioService.update(id, usuario);
+        UsuarioResponse editedUser = usuarioService.update(id, usuarioRequest);
         return ResponseEntity.ok(editedUser);
     }
 
