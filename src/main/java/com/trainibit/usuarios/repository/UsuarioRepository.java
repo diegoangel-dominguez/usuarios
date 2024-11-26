@@ -21,7 +21,7 @@ public interface UsuarioRepository extends AuditableRepository<Usuario, Long> { 
     default void deleteByIdActive(Long id) {
         Usuario entity = findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
 
-        if (!entity.isActive()) {
+        if (!entity.getActive()) {
             throw new IllegalStateException("El usuario ya está desactivado.");
         }
 

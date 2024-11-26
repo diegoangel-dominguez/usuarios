@@ -12,17 +12,17 @@ import java.time.LocalDate;
 @MappedSuperclass
 public class AuditableRecord {
 
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private Timestamp createdAt;
 
-    @Column(name = "updated_at", nullable = false)
+    @Column(name = "updated_at", nullable = false,  insertable = false)
     private Timestamp updatedAt;
 
     @ColumnDefault("true")
-    @Column(name = "active", nullable = false)
-    private boolean active = false;
+    @Column(name = "active", nullable = false, insertable = false)
+    private Boolean active;
 
-    public Timestamp getCreatedAt() {
+    /*public Timestamp getCreatedAt() {
         return createdAt;
     }
 
@@ -44,5 +44,5 @@ public class AuditableRecord {
 
     public void setActive(boolean active) {
         this.active = active;
-    }
+    }*/
 }

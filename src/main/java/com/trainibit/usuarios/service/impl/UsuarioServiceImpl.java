@@ -38,7 +38,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public UsuarioResponse findById(UUID uuid) {
        // return UsuarioMapper.mapEntityToDto(usuarioRepository.findById(id).get());
         return usuarioRepository.findByUuid(uuid)
-                .filter(Usuario::isActive)
+                .filter(Usuario::getActive)
                 .map(UsuarioMapper::mapEntityToDto)
                 .orElseThrow(() -> new DataAccessException("Usuario con ID " + uuid + " no encontrado") {
 
