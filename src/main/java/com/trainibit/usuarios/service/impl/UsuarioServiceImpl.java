@@ -24,7 +24,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<UsuarioResponse> findAll() {
-        return UsuarioMapper.mapListEntityToListDto(usuarioRepository.findAll());
+        return UsuarioMapper.mapListEntityToListDto(usuarioRepository.findByActiveTrue());
     }
 
     //Metodo FIndById
@@ -35,7 +35,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     }*/
 
     public UsuarioResponse findById(Long id) {
-        return UsuarioMapper.mapEntityToDto(usuarioRepository.findById(id).get());
+       // return UsuarioMapper.mapEntityToDto(usuarioRepository.findById(id).get());
+        return usuarioRepository.findById(id)
+                .filter(Usuario::isActive)
+                .map(UsuarioMapper::mapEntityToDto)
+                .orElseThrow(() -> new DataAccessException("Usuario con ID " + id + " no encontrado") {
+
+        });
     }
 
     //Metodo guardar usuario
@@ -50,6 +56,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 
     // Buscar el usuario por id y guardar los cambios
+
     @Override
     /*public Usuario update(Long id, Usuario updatedUsuario) {
         return usuarioRepository.findById(id).map(usuario -> {
@@ -90,6 +97,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     public UsuarioResponse delete(Long id) {
         return UsuarioMapper.mapEntityToDto(usuarioRepository.findById(id).map(usuario -> {
+
             usuarioRepository.deleteByIdActive(id);
             return usuario; // Devuelve el usuario eliminado
         }).orElseThrow(() -> new DataAccessException("Error al eliminar usuario con ID: " + id){
