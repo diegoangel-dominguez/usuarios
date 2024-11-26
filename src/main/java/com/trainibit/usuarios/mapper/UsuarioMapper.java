@@ -8,12 +8,13 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class UsuarioMapper {
 
     public static UsuarioResponse mapEntityToDto(Usuario usuario) {
         UsuarioResponse usuarioResponse = new UsuarioResponse();
-        usuarioResponse.setId(usuario.getId());
+        //usuarioResponse.setId(usuario.getId());
         usuarioResponse.setName(usuario.getName());
         usuarioResponse.setLastName(usuario.getLastName());
         usuarioResponse.setEmail(usuario.getEmail());
@@ -25,6 +26,9 @@ public class UsuarioMapper {
         } else {
             usuarioResponse.setEdad(0);
         }
+
+        usuarioResponse.setUuid(usuario.getUuid());
+
 
         return usuarioResponse;
 
@@ -53,6 +57,7 @@ public class UsuarioMapper {
         usuario.setEmail(usuarioRequest.getEmail());
         usuario.setPassword(usuarioRequest.getPassword());
         usuario.setBirth_day(usuarioRequest.getBirth_day());
+        usuario.setUuid(UUID.randomUUID());
         return usuario;
     }
 

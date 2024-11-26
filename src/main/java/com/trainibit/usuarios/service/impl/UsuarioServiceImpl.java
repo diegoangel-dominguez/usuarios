@@ -11,6 +11,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 
 //Este estereotipo siempre va en la implementacion de la interface
@@ -34,12 +35,12 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.findById(id).get();
     }*/
 
-    public UsuarioResponse findById(Long id) {
+    public UsuarioResponse findById(UUID uuid) {
        // return UsuarioMapper.mapEntityToDto(usuarioRepository.findById(id).get());
-        return usuarioRepository.findById(id)
+        return usuarioRepository.findByUuid(uuid)
                 .filter(Usuario::isActive)
                 .map(UsuarioMapper::mapEntityToDto)
-                .orElseThrow(() -> new DataAccessException("Usuario con ID " + id + " no encontrado") {
+                .orElseThrow(() -> new DataAccessException("Usuario con ID " + uuid + " no encontrado") {
 
         });
     }

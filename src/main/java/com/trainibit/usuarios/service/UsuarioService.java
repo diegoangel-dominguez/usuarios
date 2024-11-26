@@ -5,6 +5,7 @@ import com.trainibit.usuarios.request.UsuarioRequest;
 import com.trainibit.usuarios.response.UsuarioResponse;
 
 import java.util.List;
+import java.util.UUID;
 
 public interface UsuarioService {
 
@@ -15,7 +16,7 @@ public interface UsuarioService {
     List<UsuarioResponse> findAll();
 
     //Un solo usuario
-    UsuarioResponse findById(Long id);
+    UsuarioResponse findById(UUID uuid);
 
     //save user
     //Usuario save(Usuario usuario);

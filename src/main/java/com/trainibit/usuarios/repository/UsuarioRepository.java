@@ -7,13 +7,15 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface UsuarioRepository extends AuditableRepository<Usuario, Long> { //Integer porque no acepta datos primitivos
     //Sobre escritura de methods
 
     List<Usuario> findByActiveTrue(); // Filtra usuarios donde active = true
-
+    Optional<Usuario> findByUuid(UUID uuid);
     //Crea una implementacion del metodo deletedByID
     @Override
     default void deleteByIdActive(Long id) {

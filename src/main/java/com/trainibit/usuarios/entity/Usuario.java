@@ -13,6 +13,7 @@ import lombok.Setter;
 import org.springframework.data.domain.Auditable;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -51,6 +52,8 @@ public class Usuario extends AuditableRecord{
     @Column(name = "birth_day", nullable = false)
     private LocalDate birth_day;
 
+    @Column(name = "uuid")
+    private UUID uuid;
 
     //DEFINICION DE GETTERS AND SETTERS PARA REALIZAR LA OPERACION POST
 

@@ -3,11 +3,12 @@ package com.trainibit.usuarios.response;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 public class UsuarioResponse {
 
-    private Long id;
+    //private Long id;
 
     private String name;
 
@@ -20,5 +21,8 @@ public class UsuarioResponse {
     private LocalDate birth_day;
 
     private int edad;
+
+    private UUID uuid;
+
 
 }

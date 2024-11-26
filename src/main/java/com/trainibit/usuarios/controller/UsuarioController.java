@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
+import java.util.UUID;
 
 
 @RestController
@@ -54,9 +54,9 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }*/
     //Metodo para consultar por id FindById
-    @GetMapping("/{id}")
-    public ResponseEntity<UsuarioResponse> getUsuarioById(@Valid @PathVariable Long id){
-        UsuarioResponse searchedUser = usuarioService.findById(id);
+    @GetMapping("/{uuid}")
+    public ResponseEntity<UsuarioResponse> getUsuarioById(@Valid @PathVariable UUID uuid){
+        UsuarioResponse searchedUser = usuarioService.findById(uuid);
         return ResponseEntity.ok(searchedUser);
     }
 
@@ -76,7 +76,7 @@ public class UsuarioController {
     }
 
     //Endpoint PutMapping
-    @PutMapping("/{id}")
+    @PutMapping("/{uuid}")
 
     // Recibe el ID como pathvariable y el objeto actualizado en el cuerpo de la solicitud (@RequestBody).
     /*public ResponseEntity<Usuario> updateUser(
