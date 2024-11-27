@@ -24,5 +24,7 @@ public class UsuarioResponse {
 
     private UUID uuid;
 
+    private String planeta;
+
 
 }

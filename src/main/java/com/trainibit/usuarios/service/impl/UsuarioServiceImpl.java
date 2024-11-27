@@ -5,6 +5,7 @@ import com.trainibit.usuarios.mapper.UsuarioMapper;
 import com.trainibit.usuarios.repository.UsuarioRepository;
 import com.trainibit.usuarios.request.UsuarioRequest;
 import com.trainibit.usuarios.response.UsuarioResponse;
+import com.trainibit.usuarios.service.PlanetService;
 import com.trainibit.usuarios.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -22,6 +23,9 @@ public class UsuarioServiceImpl implements UsuarioService {
     //
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PlanetService planetService;
 
     @Override
     public List<UsuarioResponse> findAll() {
@@ -52,7 +56,15 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.save(usuario);
     }*/
     public UsuarioResponse save(UsuarioRequest usuarioRequest) {
-        return UsuarioMapper.mapEntityToDto(usuarioRepository.save(UsuarioMapper.mapDtoToEntity(usuarioRequest)));
+
+        Usuario usuario = UsuarioMapper.mapDtoToEntity(usuarioRequest);
+        usuario.setPlaneta(getNamePlanet());
+
+        Usuario savedUsuario = usuarioRepository.save(usuario);
+
+        return UsuarioMapper.mapEntityToDto(savedUsuario);
+
+        // return UsuarioMapper.mapEntityToDto(usuarioRepository.save(UsuarioMapper.mapDtoToEntity(usuarioRequest)));
     }
 
 
@@ -71,16 +83,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 
         });
     }*/
-    public UsuarioResponse update(Long id, UsuarioRequest updatedUsuario) {
+    public UsuarioResponse update(UUID uuid, UsuarioRequest updatedUsuario) {
 
-        return usuarioRepository.findById(id).map(usuario -> {
+        return usuarioRepository.findByUuid(uuid).map(usuario -> {
             usuario.setName(updatedUsuario.getName());
             usuario.setLastName(updatedUsuario.getLastName());
             usuario.setEmail(updatedUsuario.getEmail());
             usuario.setPassword(updatedUsuario.getPassword());
             usuario.setBirth_day(updatedUsuario.getBirth_day());
             return UsuarioMapper.mapEntityToDto(usuarioRepository.updateAudit(usuario));
-        }).orElseThrow(() -> new DataAccessException("Error al actualizar usuario con ID: " + id) {
+        }).orElseThrow(() -> new DataAccessException("Error al actualizar usuario con ID: " + uuid) {
 
         });
     }
@@ -96,13 +108,18 @@ public class UsuarioServiceImpl implements UsuarioService {
         });
     }*/
 
-    public UsuarioResponse delete(Long id) {
-        return UsuarioMapper.mapEntityToDto(usuarioRepository.findById(id).map(usuario -> {
+    public UsuarioResponse delete(UUID uuid) {
+        return UsuarioMapper.mapEntityToDto(usuarioRepository.findByUuid(uuid).map(usuario -> {
 
-            usuarioRepository.deleteByIdActive(id);
+            usuarioRepository.deleteByIdActive(uuid);
             return usuario; // Devuelve el usuario eliminado
-        }).orElseThrow(() -> new DataAccessException("Error al eliminar usuario con ID: " + id){
+        }).orElseThrow(() -> new DataAccessException("Error al eliminar usuario con ID: " + uuid){
 
         }));
+    }
+
+    private String getNamePlanet() {
+        int idPlaneta = (int) (Math.random() * 50) + 1;
+        return planetService.getPlanetById(idPlaneta).getResult().getProperties().getName();
     }
 }

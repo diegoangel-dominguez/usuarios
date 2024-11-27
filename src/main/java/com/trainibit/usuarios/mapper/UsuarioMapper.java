@@ -28,7 +28,7 @@ public class UsuarioMapper {
         }
 
         usuarioResponse.setUuid(usuario.getUuid());
-
+        usuarioResponse.setPlaneta(usuario.getPlaneta());
 
         return usuarioResponse;
 

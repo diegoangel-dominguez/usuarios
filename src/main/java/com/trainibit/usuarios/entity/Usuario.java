@@ -55,6 +55,9 @@ public class Usuario extends AuditableRecord{
     @Column(name = "uuid")
     private UUID uuid;
 
+    @Column(name = "planeta", nullable = false)
+    private String planeta;
+
     //DEFINICION DE GETTERS AND SETTERS PARA REALIZAR LA OPERACION POST
 
     /* public Long getId() {

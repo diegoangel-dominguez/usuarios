@@ -86,14 +86,14 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }*/
 
-    public ResponseEntity<UsuarioResponse> updateUser(@PathVariable Long id, @Valid @RequestBody UsuarioRequest usuarioRequest) {
+    public ResponseEntity<UsuarioResponse> updateUser(@PathVariable UUID uuid, @Valid @RequestBody UsuarioRequest usuarioRequest) {
         //Usuario usuario = UsuarioMapper.mapDtoToEntity(usuarioRequest);
 
-        UsuarioResponse updatedUser  = usuarioService.update(id, usuarioRequest);
+        UsuarioResponse updatedUser  = usuarioService.update(uuid, usuarioRequest);
         return ResponseEntity.ok(updatedUser);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{uuid}")
     // Este recibe el ID del usuario como parámetro de la ruta (@PathVariable).
     /*public ResponseEntity<Usuario> deleteUser(@PathVariable Long id){
     Usuario deleteUser = usuarioService.delete(id);
@@ -101,8 +101,8 @@ public class UsuarioController {
     return ResponseEntity.ok(deleteUser);
     }*/
 
-    public ResponseEntity<UsuarioResponse> deleteUser(@Valid @PathVariable Long id){
-        UsuarioResponse deleteUser = usuarioService.delete(id);
+    public ResponseEntity<UsuarioResponse> deleteUser(@Valid @PathVariable UUID uuid){
+        UsuarioResponse deleteUser = usuarioService.delete(uuid);
         //Codigo de estatus HTTP 204
         return ResponseEntity.ok(deleteUser);
     }

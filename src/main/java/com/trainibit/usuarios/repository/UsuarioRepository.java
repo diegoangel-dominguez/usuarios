@@ -18,8 +18,8 @@ public interface UsuarioRepository extends AuditableRepository<Usuario, Long> { 
     Optional<Usuario> findByUuid(UUID uuid);
     //Crea una implementacion del metodo deletedByID
     @Override
-    default void deleteByIdActive(Long id) {
-        Usuario entity = findById(id).orElseThrow(() -> new RuntimeException("Id not found"));
+    default void deleteByIdActive(UUID uuid) {
+        Usuario entity = findByUuid(uuid).orElseThrow(() -> new RuntimeException("Id not found"));
 
         if (!entity.getActive()) {
             throw new IllegalStateException("El usuario ya está desactivado.");

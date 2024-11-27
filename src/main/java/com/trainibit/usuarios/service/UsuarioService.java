@@ -27,11 +27,11 @@ public interface UsuarioService {
 
     //UsuarioResponse update(Long id, Usuario deletedUser);
 
-    UsuarioResponse update(Long id, UsuarioRequest updatedUser);
+    UsuarioResponse update(UUID uuid, UsuarioRequest updatedUser);
 
     //metodo para manejar la logica de eliminacion. Si el usuario no existe, lanza una excepcion personalizada (como en el caso de la operacion PUT).
     //Usuario delete(Long id);
 
-    UsuarioResponse delete(Long id);
+    UsuarioResponse delete(UUID uuid);
 
 }

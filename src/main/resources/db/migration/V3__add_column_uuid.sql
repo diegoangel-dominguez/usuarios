@@ -1,1 +1,0 @@
-ALTER TABLE public.usuarios ADD "uuid" uuid NULL;
