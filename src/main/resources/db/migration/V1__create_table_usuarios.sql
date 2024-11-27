@@ -12,6 +12,7 @@ CREATE TABLE usuarios (
                           created_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
                           updated_at timestamp DEFAULT CURRENT_TIMESTAMP NOT NULL,
                           "uuid" uuid NULL,
+                          "planeta" varchar NULL,
                           CONSTRAINT usuarios_pk PRIMARY KEY (id)
 );
 -- Permissions

@@ -1,1 +1,0 @@
-ALTER TABLE public.usuarios ADD planeta varchar NULL;
