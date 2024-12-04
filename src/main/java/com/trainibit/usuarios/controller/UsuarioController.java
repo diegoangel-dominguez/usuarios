@@ -68,7 +68,6 @@ public class UsuarioController {
     }*/
     public ResponseEntity<UsuarioResponse> createUsuario(@Valid @RequestBody UsuarioRequest usuarioRequest) {
             //Usuario usuario= UsuarioMapper.mapDtoToEntity(usuarioRequest);
-
             UsuarioResponse createdUser = usuarioService.save(usuarioRequest);
             //Codigo de estatus HTTP 201
             return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
