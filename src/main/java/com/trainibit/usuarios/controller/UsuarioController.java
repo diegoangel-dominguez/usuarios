@@ -1,13 +1,10 @@
 package com.trainibit.usuarios.controller;
 
-import com.trainibit.usuarios.entity.Usuario;
-import com.trainibit.usuarios.mapper.UsuarioMapper;
 import com.trainibit.usuarios.request.UsuarioRequest;
 import com.trainibit.usuarios.response.UsuarioResponse;
 import com.trainibit.usuarios.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;

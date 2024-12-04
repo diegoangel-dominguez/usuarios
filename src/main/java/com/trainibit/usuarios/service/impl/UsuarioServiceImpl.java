@@ -2,6 +2,7 @@ package com.trainibit.usuarios.service.impl;
 
 import com.trainibit.usuarios.entity.Usuario;
 import com.trainibit.usuarios.mapper.UsuarioMapper;
+import com.trainibit.usuarios.mapper.UsuarioMapper2;
 import com.trainibit.usuarios.repository.UsuarioRepository;
 import com.trainibit.usuarios.request.UsuarioRequest;
 import com.trainibit.usuarios.response.UsuarioResponse;
@@ -27,9 +28,13 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Autowired
     private PlanetService planetService;
 
+    @Autowired
+    private UsuarioMapper usuarioMapper;
+
     @Override
     public List<UsuarioResponse> findAll() {
-        return UsuarioMapper.mapListEntityToListDto(usuarioRepository.findByActiveTrue());
+        //return UsuarioMapper2.mapListEntityToListDto(usuarioRepository.findByActiveTrue());
+        return null;
     }
 
     //Metodo FIndById
@@ -43,7 +48,7 @@ public class UsuarioServiceImpl implements UsuarioService {
        // return UsuarioMapper.mapEntityToDto(usuarioRepository.findById(id).get());
         return usuarioRepository.findByUuid(uuid)
                 .filter(Usuario::getActive)
-                .map(UsuarioMapper::mapEntityToDto)
+                .map(usuarioMapper::mapEntityToDto)
                 .orElseThrow(() -> new DataAccessException("Usuario con ID " + uuid + " no encontrado") {
 
         });
@@ -57,12 +62,12 @@ public class UsuarioServiceImpl implements UsuarioService {
     }*/
     public UsuarioResponse save(UsuarioRequest usuarioRequest) {
 
-        Usuario usuario = UsuarioMapper.mapDtoToEntity(usuarioRequest);
+        Usuario usuario = UsuarioMapper2.mapDtoToEntity(usuarioRequest);
         usuario.setPlaneta(getNamePlanet());
 
         Usuario savedUsuario = usuarioRepository.save(usuario);
 
-        return UsuarioMapper.mapEntityToDto(savedUsuario);
+        return UsuarioMapper2.mapEntityToDto(savedUsuario);
 
         // return UsuarioMapper.mapEntityToDto(usuarioRepository.save(UsuarioMapper.mapDtoToEntity(usuarioRequest)));
     }
@@ -91,7 +96,7 @@ public class UsuarioServiceImpl implements UsuarioService {
             usuario.setEmail(updatedUsuario.getEmail());
             usuario.setPassword(updatedUsuario.getPassword());
             usuario.setBirth_day(updatedUsuario.getBirth_day());
-            return UsuarioMapper.mapEntityToDto(usuarioRepository.updateAudit(usuario));
+            return UsuarioMapper2.mapEntityToDto(usuarioRepository.updateAudit(usuario));
         }).orElseThrow(() -> new DataAccessException("Error al actualizar usuario con ID: " + uuid) {
 
         });
@@ -109,7 +114,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }*/
 
     public UsuarioResponse delete(UUID uuid) {
-        return UsuarioMapper.mapEntityToDto(usuarioRepository.findByUuid(uuid).map(usuario -> {
+        return UsuarioMapper2.mapEntityToDto(usuarioRepository.findByUuid(uuid).map(usuario -> {
 
             usuarioRepository.deleteByIdActive(uuid);
             return usuario; // Devuelve el usuario eliminado
