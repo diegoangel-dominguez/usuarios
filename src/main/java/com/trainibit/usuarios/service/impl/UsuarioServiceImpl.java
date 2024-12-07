@@ -124,7 +124,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     private String getNamePlanet() {
-        int idPlaneta = (int) (Math.random() * 50) + 1;
+        int idPlaneta = (int) (Math.random() * 60) + 1;
         return planetService.getPlanetById(idPlaneta).getResult().getProperties().getName();
     }
 }
